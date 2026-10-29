@@ -19,7 +19,7 @@ app.get('/tarefas', async (req, res) => {
         res.status(201).json(resposta);
     } catch (error){
         console.log(error);
-        res.status(500).json({message: "Erro ao buscar tarefas"});
+        res.status(500).json({message: "Erro ao buscar tarefas"})
     }
 })
 
