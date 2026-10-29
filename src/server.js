@@ -13,9 +13,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/tarefas', async (req, res) => {
-    const sql = "SELECT * FROM tarefas";
-    const [resposta] = await conexao.query(sql);
-    res.status(201).json(resposta);
+    try {
+        const sql = "SELECT * FROM tarefas";
+        const [resposta] = await conexao.query(sql);
+        res.status(201).json(resposta);
+    } catch (error){
+        console.log(error);
+        res.status(500).json({message: "Erro ao buscar tarefas"});
+    }
 })
 
 app.get('/tarefas/:id', async (req, res) => {
@@ -35,7 +40,7 @@ app.get('/tarefas/:id', async (req, res) => {
 app.post('/tarefas', async (req, res) => {
     const { nome, descricao, responsavel, } = req.body;
     if (!nome || !descricao || !responsavel) {
-       return res.status(404).json({
+        return res.status(404).json({
             message: "Os campos de nome, descrição e responsável são obrigatórios."
         })
     }
